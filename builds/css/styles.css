@@ -1,0 +1,89 @@
+/* Put your CSS here */
+
+html,
+body {
+  margin: 20px;
+}
+
+.page-header a h1 {
+  color: #555;
+}
+
+.empty-list {
+  min-height: 100px;
+  text-align: center;
+}
+
+.empty-list .empty-message {
+  display: inline-block;
+  color: #555;
+  line-height: 100px;
+}
+
+.album-link.active .text-muted {
+  color: #fff;
+}
+
+.new-album {
+  width: 70%;
+}
+
+.new-album-button {
+  margin-left: 2em;
+  padding: 3px 10px;
+}
+
+.new-track {
+  width: 50%;
+}
+
+.new-track-button {
+  margin-left: 20px;
+}
+
+.track {
+  border: 1px solid #ebebeb;
+}
+
+.editing .edit {
+  margin-top: 10px;
+}
+
+.edit-icon,
+.remove-icon {
+  font-size: 16px;
+  display: none;
+}
+
+.remove-icon {
+  float: right;
+  margin-top: -15px;
+  margin-right: -15px;
+}
+
+.edit-field:hover .edit-icon,
+.album-link:hover .remove-icon {
+  display: inline-block;
+}
+
+.track.editing:last-child {
+  margin-bottom: -1px;
+}
+
+.btn-panel {
+  margin: 5px;
+}
+
+.track-thumbnail {
+  margin-top: 10px;
+  max-width: 128px;
+  max-height: 128px;
+}
+
+.big {
+  color: black;
+  font-size: 30px;
+  height: 66px;
+  line-height: 42px;
+  width: 200px;
+}

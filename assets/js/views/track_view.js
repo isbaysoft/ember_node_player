@@ -1,0 +1,1 @@
+Player.AlbumsIndexView = Ember.View.extend();

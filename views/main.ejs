@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>ENPlayer</title>
+    <meta name="description"
+          content="This blog about some interesting solutions in front-end development as well as about ordinary things described in simplest matter">
+    <meta name="author" content="Vladimir Katansky">
+
+    <!-- Stylesheets -->
+    <link href="/css/bootstrap.css" rel="stylesheet"/>
+    <link href="/css/styles.css" rel="stylesheet"/>
+    <script src="/js/all.js"></script>
+</head>
+<body>
+<script type="text/x-handlebars" data-template-name="application">
+    <div class="container">
+        <div class="page-header">
+            {{#link-to "albums.index"}}
+            <h1>Ember Node Player</h1>
+            {{/link-to}}
+        </div>
+        <div class="row">
+            {{outlet}}
+        </div>
+    </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="albums">
+    <div class="col-md-4">
+        <div class="list-group">
+            <div class="list-group-item">
+                {{input type="text" class="new-album" placeholder="New album" value=newTitle
+                insert-newline="createAlbum" }}
+                <button class="btn btn-primary btn-sm new-album-button"
+                {{action "createAlbum"}}
+                {{bind-attr disabled=disabled}}>Add</button>
+            </div>
+            {{#if albumsExist}}
+                {{#each model}}
+                    {{album-details album=this editTitle="editTitle" edit="editAlbum" remove="removeAlbum"}}
+                {{/each}}
+            {{/if}}
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="list-group">
+            {{outlet}}
+        </div>
+    </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="albums/index">
+    <div class="list-group-item empty-list">
+        {{#if trackCreationAvailable}}
+            <form role="form">
+                <div class="form-group">
+                    <label for="newTitle">Title:</label>
+                    {{input type="text" id="newTitle" class="form-control" value=newTitle placeholder="Enter track title"}}
+                </div>
+                <div class="form-group">
+                    <label for="newGenre">Genre:</label>
+                    {{input type="text" id="newGenre" class="form-control" value=newGenre placeholder="Enter track genre"}}
+                </div>
+                <div class="form-group">
+                    <label for="trackSource">TrackSource:</label>
+                    {{view Player.FileUploadView id="trackSource" class="form-control" name="trackSource" contentBinding="content"}}
+                </div>
+                <div class="form-group">
+                    <label for="coverSource">Cover Source:</label>
+                    {{view Player.FileUploadView id="coverSource" class="form-control" name="coverSource" contentBinding="content"}}
+                </div>
+                <button class="btn btn-primary btn-sm new-track-button"
+                {{action "createTrack" content}}>Add</button>
+            </form>
+        {{/if}}
+        {{#if tracksExist}}
+            {{#unless trackCreationAvailable}}
+                <a href="#" {{action enableTrackCreation}}> Add Track?</a>
+            {{/unless}}
+            {{#each model}}
+                {{track-details track=this remove="removeTrack" edit="editTrack" download="downloadTrack" editTitle="editTitle" editGenre="editGenre"}}
+            {{/each}}
+        {{else}}
+            {{#unless trackCreationAvailable}}
+                <div class="empty-message">
+                    There are no tracks. Why don't you <a href="#" {{action enableTrackCreation}}>create one?</a>
+                </div>
+            {{/unless}}
+        {{/if}}
+    </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="components/album-details">
+    {{#link-to "album.tracks" album class="list-group-item album-link"}}
+        <span class="col-sm-4"><img {{bind-attr src='album.cover'}} class="img-thumbnail" /></span>
+        <span class="col-sm-8">
+        {{#if isTitleEditing}}
+            {{edit-title class="edit big" value=album.title focus-out="acceptChanges" insert-newline="acceptChanges"}}
+        {{else}}
+            <h2 class="edit-field"> {{album.title}}&nbsp
+                <span {{action "editTitle"}} class="glyphicon glyphicon-pencil edit-icon"></span>
+                <span {{action "remove"}} class="glyphicon glyphicon-remove remove-icon"></span></h2>
+        {{/if}}
+        </span>
+        <p class="text-muted">{{formattedDate album.releaseDate}}</p>
+    {{/link-to}}
+</script>
+
+<script type="text/x-handlebars" data-template-name="components/track-details">
+    <div
+    {{bind-attr class=":row :track isTitleEditing:editing isGenreEditing:editing"}}>
+    <div class="col-sm-7">
+                <span>
+                    {{#if isTitleEditing}}
+                        {{edit-title class="edit" value=track.title focus-out="acceptChanges" insert-newline="acceptChanges"}}
+                    {{else}}
+                        <h3 class="edit-field"> {{track.title}}&nbsp<span {{action "editTitle"}} class="glyphicon
+                            glyphicon-pencil edit-icon"></span></h3>
+                    {{/if}}
+                    {{#if isGenreEditing}}
+                        {{edit-genre class="edit" value=track.genre focus-out="acceptChanges" insert-newline="acceptChanges"}}
+                    {{else}}
+                        <h4 class="edit-field">(<i>{{track.genre}}</i>)&nbsp<span {{action "editGenre"}} class="glyphicon
+                        glyphicon-pencil edit-icon"></span></h4>
+                    {{/if}}
+        </span>
+        <div class="text-muted">{{formattedDate track.releaseDate}}</div>
+        <div class="btn-panel">
+            <button class="btn btn-primary btn-sm download-track" disabled="disabled"
+            {{action "download"}}> Download Track
+            <span class="glyphicon glyphicon-download"></span>
+            </button>
+            <button
+            {{action "remove"}} class="btn btn-danger">Delete Track</button>
+        </div>
+    </div>
+    <div class="col-sm-5">
+        <img {{bind-attr src='track.cover'}} class='image-thumbnail img-rounded track-thumbnail' />
+    </div>
+    </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="album">
+    {{outlet}}
+</script>
+
+</body>
+</html>

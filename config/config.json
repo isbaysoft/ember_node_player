@@ -1,0 +1,22 @@
+{
+	"port": 5000,
+	"mongoose" : {
+		"uri": "mongodb://localhost/ember_node_player",
+		"options": {
+			"server": {
+				"socketOptions": {
+					"keepAlive": 1
+				}
+			}
+		}
+	},
+	"session": {
+		"secret": "blackeningandfarcry",
+		"key": "sid",
+		"cookie": {
+			"path": "/",
+			"httpOnly": true,
+			"maxAge": null
+		}
+	}
+}
