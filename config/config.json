@@ -1,7 +1,7 @@
 {
 	"port": 5000,
 	"mongoose" : {
-		"uri": "mongodb://localhost/ember_node_player",
+		"uri": "blackening:farcry1111@ds061797.mongolab.com:61797/ember_node_player",
 		"options": {
 			"server": {
 				"socketOptions": {

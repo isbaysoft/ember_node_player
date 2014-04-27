@@ -37,6 +37,8 @@ app.use(function(req, res) {
 	res.send(404, "Page not found");
 });
 
-var server = http.createServer(app).listen(config.get('port'), function() {
+//process.env.PORT only for "heroku" :)
+var port = Number(process.env.PORT || 5000);
+var server = http.createServer(app).listen(port, function() {
 	console.log('Express server listening on port ' + config.get('port'));
 });
