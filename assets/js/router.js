@@ -11,6 +11,7 @@ Player.AlbumsRoute = Ember.Route.extend({
 		return Player.Adapter.ajax('/albums').then(function(data) {
 			var albums = data.map(Player.Album.createRecord, Player.Album);
 			return Ember.RSVP.all(albums);
+			// RSVP тут ни к чему, все модели в эмбер промис
 		})
 	}
 });
